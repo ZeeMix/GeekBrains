@@ -135,7 +135,7 @@ BASE_DIR = os.path.dirname(__file__)
 def decorator_func(func):
     print('Я - декоратор')
 
-    def wrapper(*args, **kwargs):
+    def wrapper2(*args, **kwargs):
         print('Я - обёртка')
 
         start = perf_counter()
@@ -144,7 +144,7 @@ def decorator_func(func):
 
         return result
 
-    return wrapper
+    return wrapper2
 
 
 # несколько декораторов и декоратор с аргументами
@@ -152,7 +152,7 @@ def print_docs(verbosity=0):
     print('АТРИБУТНАЯ ОБЁРТКА')
     def _logger(func):
         print('ДЕКОРАТОР')
-        def wrapper(*args, **kwargs):
+        def wrapper1(*args, **kwargs):
             print('ФУНКЦИОНАЛЬНАЯ ОБЁРТКА')
             msg = ''
             result = func(*args, **kwargs)
@@ -162,13 +162,12 @@ def print_docs(verbosity=0):
                 msg = f'\tcall {func.__name__}\n{func.__doc__}\nРезультат: {result}'
             return msg
 
-        return wrapper
+        return wrapper1
 
     return _logger
 
-
-@decorator_func
-@print_docs(verbosity=10)
+# @decorator_func
+# @print_docs(verbosity=10)
 def file_saver(future_name_file: str, numbers: list, databytes=False):
     """Функция сохранения переданного списка в файл
     :param future_name_file: название файла, который будет сохранён в директории trash
@@ -190,5 +189,11 @@ def file_saver(future_name_file: str, numbers: list, databytes=False):
 
 nums = [random.random() * 10 ** 3 for _ in range(10 ** 6)]
 
+file_saver = decorator_func(print_docs(verbosity=10)(file_saver))
+
+
 print(file_saver('json_saver.json', nums))
-print(file_saver('pickle_saver.pickle', nums, databytes=True))
+# print(file_saver('pickle_saver.pickle', nums, databytes=True))
+
+
+
