@@ -136,3 +136,73 @@ print()
 # arr[8] = 20
 # for i in range(10):
 #     print('arr[{}] = {}'.format(i, arr[i]))
+
+
+# Интерфейс итерации __iter__
+# my_list = [30, 105.6, True, 'text']
+# for el in my_list:
+#     print(el)
+#
+#
+# class Iterator:
+#     def __init__(self, start=0):
+#         self.i = start
+#
+#     def __next__(self):
+#         self.i += 1
+#         if self.i <= 5:
+#             return self.i
+#         else:
+#             raise StopIteration
+#
+#
+# class IterObj:
+#     def __init__(self, start=0):
+#         self.start = start - 1
+#
+#     def __iter__(self):
+#         return Iterator(self.start)
+#
+#
+# obj = IterObj(start=2)
+# for el in obj:
+#     print(el)
+
+
+class Iter:
+    def __init__(self, start=0):
+        self.i = start - 1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.i += 1
+        if self.i <= 5:
+            return self.i
+        else:
+            raise StopIteration
+
+
+obj = Iter(start=2)
+for el in obj:
+    print(el)
+
+
+# Декоратор @property
+class MyClass:
+    def __init__(self, param1, param2):
+        self.param1 = param1
+        self.param2 = param2
+
+    @property
+    def my_method(self):
+        return f"Параметры, переданные в класс: {self.param1} {self.param2}"
+
+
+mc = MyClass('text1', 'text2')
+print(mc.param1)
+print(mc.param2)
+
+print(mc.my_method)
+
